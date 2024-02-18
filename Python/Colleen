@@ -1,0 +1,15 @@
+#!/bin/python3
+from string import Template
+
+code = "#!/bin/python3\nfrom string import Template\n\ncode = $repr_code\ncode_template = Template(code)\n\n# I am a comment outside a function\ndef main():\n    # I am a comment outside a function\n    foo()\ndef foo():\n    print(code_template.substitute(repr_code=repr(code)))\n\nif __name__ == '__main__':\n    main()"
+code_template = Template(code)
+
+# I am a comment outside a function
+def main():
+    # I am a comment outside a function
+    foo()
+def foo():
+    print(code_template.substitute(repr_code=repr(code)))
+
+if __name__ == '__main__':
+    main()
