@@ -1,0 +1,17 @@
+#!/bin/python3
+import os
+from string import Template
+
+i = 5
+code = "#!/bin/python3\nimport os\nfrom string import Template\n\ni = $i\ncode = $repr_code\ncode_template = Template(code)\n\nif __name__ == '__main__':\n    if os.environ.get('DR_QUINE__AM_I_A_CHILD') != None:\n        i -= 1\n    os.environ['DR_QUINE__AM_I_A_CHILD'] = '1'\n    with open(f'Sully_{i}', 'w') as child_file:\n        child_file.write(code_template.substitute(repr_code=repr(code), i=i))\n    os.chmod(f'Sully_{i}', 0o744)\n    if i != 0:\n        os.system(f'./Sully_{i}')\n"
+code_template = Template(code)
+
+if __name__ == '__main__':
+    if os.environ.get('DR_QUINE__AM_I_A_CHILD') != None:
+        i -= 1
+    os.environ['DR_QUINE__AM_I_A_CHILD'] = '1'
+    with open(f'Sully_{i}', 'w') as child_file:
+        child_file.write(code_template.substitute(repr_code=repr(code), i=i))
+    os.chmod(f'Sully_{i}', 0o744)
+    if i != 0:
+        os.system(f'./Sully_{i}')
